@@ -1,0 +1,85 @@
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
+import { useState } from "react";
+
+export default function Portfolio() {
+  const [page, setPage] = useState("home");
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-black to-gray-900 text-white p-6">
+      {/* Navbar */}
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Suresh.dev</h1>
+        <div className="flex gap-4">
+          <button onClick={() => setPage("home")}>Home</button>
+          <button onClick={() => setPage("services")}>Services</button>
+          <button onClick={() => setPage("portfolio")}>Portfolio</button>
+          <button onClick={() => setPage("contact")}>Contact</button>
+        </div>
+      </div>
+
+      {/* Pages */}
+      {page === "home" && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <h2 className="text-4xl font-bold mb-4">Build Secure & Smart Systems</h2>
+          <p className="text-gray-400 mb-6">Freelance Developer | Cybersecurity | AI Solutions</p>
+          <Button onClick={() => setPage("services")}>Explore Services</Button>
+        </motion.div>
+      )}
+
+      {page === "services" && (
+        <motion.div initial={{ x: 100 }} animate={{ x: 0 }} className="grid md:grid-cols-3 gap-6">
+          {[{
+            title: "Web Development",
+            price: "₹5K - ₹15K",
+            desc: "Modern responsive web apps"
+          }, {
+            title: "Cybersecurity",
+            price: "₹7K - ₹20K",
+            desc: "Pen testing & threat analysis"
+          }, {
+            title: "AI Solutions",
+            price: "₹8K - ₹25K",
+            desc: "ML & automation systems"
+          }].map((s, i) => (
+            <motion.div key={i} whileHover={{ scale: 1.05 }}>
+              <Card className="rounded-2xl bg-gray-800 shadow-xl">
+                <CardContent className="p-5">
+                  <h3 className="text-xl font-semibold">{s.title}</h3>
+                  <p className="text-gray-400">{s.desc}</p>
+                  <p className="mt-2 font-bold">{s.price}</p>
+                  <Button className="mt-3">Hire Me</Button>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+      )}
+
+      {page === "portfolio" && (
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <h2 className="text-3xl font-bold mb-4">Projects</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            {["Ransomware Detection", "Food Court System", "Showroom System"].map((p, i) => (
+              <motion.div key={i} whileHover={{ scale: 1.03 }} className="p-4 bg-gray-800 rounded-2xl">
+                <h3 className="text-xl">{p}</h3>
+                <p className="text-gray-400">Click to view details</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {page === "contact" && (
+        <motion.div initial={{ y: 50 }} animate={{ y: 0 }}>
+          <h2 className="text-3xl font-bold mb-4">Contact Me</h2>
+          <input className="w-full p-2 mb-3 rounded bg-gray-800" placeholder="Your Name" />
+          <input className="w-full p-2 mb-3 rounded bg-gray-800" placeholder="Your Email" />
+          <textarea className="w-full p-2 mb-3 rounded bg-gray-800" placeholder="Project Details" />
+          <Button>Send Message</Button>
+        </motion.div>
+      )}
+    </div>
+  );
+}
